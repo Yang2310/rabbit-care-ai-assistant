@@ -2,11 +2,11 @@
 
 A RAG-based AI assistant for rabbit care and health-related knowledge retrieval.
 
-**English** | [简体中文](README.zh-CN.md)
-
 > **Status:** In active development  
 > **Role:** Independent developer  
 > **Focus:** Retrieval-Augmented Generation (RAG) · LLM integration · knowledge retrieval · grounded response generation
+
+**English** | [简体中文](README.zh-CN.md)
 
 ## Project Overview
 
@@ -54,7 +54,7 @@ The project is still being tuned. Current work is centered on:
 - testing questions with different levels of specificity
 - refining the user-facing interaction flow
 
-Because the system is still under development, this public repository documents the **architecture, design decisions, and development progress** rather than publishing the complete private implementation or knowledge base.
+Because the system is still under development, this repository documents the **architecture, design decisions, and development progress** rather than publishing the complete private implementation or knowledge base.
 
 ## Repository Structure
 
@@ -91,11 +91,7 @@ The assistant is being evaluated with practical questions rather than only check
 
 A lightweight evaluation template is included in [`examples/evaluation-template.md`](examples/evaluation-template.md).
 
-## Why This Repository Is Public
-
-The production source code, knowledge base, prompts, and configuration remain private while the system is under development. This repository is a portfolio-oriented technical overview showing the system design, RAG workflow, and development methodology without exposing sensitive project assets.
-
-## Planned Portfolio Updates
+## Planned Updates
 
 As development progresses, this repository can be expanded with:
 
