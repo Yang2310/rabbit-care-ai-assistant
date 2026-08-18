@@ -2,6 +2,8 @@
 
 A RAG-based AI assistant for rabbit care and health-related knowledge retrieval.
 
+**English** | [简体中文](README.zh-CN.md)
+
 > **Status:** In active development  
 > **Role:** Independent developer  
 > **Focus:** Retrieval-Augmented Generation (RAG) · LLM integration · knowledge retrieval · grounded response generation
@@ -59,11 +61,15 @@ Because the system is still under development, this public repository documents 
 ```text
 .
 ├── README.md
+├── README.zh-CN.md
 ├── docs/
 │   ├── rag-design.md
-│   └── development-status.md
+│   ├── rag-design.zh-CN.md
+│   ├── development-status.md
+│   └── development-status.zh-CN.md
 └── examples/
-    └── evaluation-template.md
+    ├── evaluation-template.md
+    └── evaluation-template.zh-CN.md
 ```
 
 ## RAG Design
