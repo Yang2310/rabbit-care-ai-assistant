@@ -1,35 +1,28 @@
-# Development Status
+# Development Status — Portfolio Summary
 
-## Current Stage
+**English** | [简体中文](development-status.zh-CN.md) · [Back to portfolio](../README.md)
 
-The Rabbit Care AI Assistant is currently in active development.
+**Active independent R&D — not a completed or production-qualified AI assistant.**
 
-The system concept and RAG workflow are established, while retrieval quality and answer grounding are still being tuned before the project is presented as a finished application.
+This page deliberately tracks **stable milestones**, not the daily state of the private repository.
 
-## Current Priorities
+### Engineering foundations already built
 
-Development work is currently focused on:
+- Python/FastAPI and React/TypeScript application foundations, browser-local data and private-record lifecycles.
+- Verified-source research and canonicalization contracts, retrieval/index representations, ChromaDB integration and RAG evaluation tools.
+- Typed conversation-state foundations, source/time/identity validation, bounded fact ADD/REVISE/RETIRE operations and guarded record-authority interfaces.
+- Automated backend/frontend/browser/container checks and isolated model/tool evaluation infrastructure.
 
-- improving retrieval precision
-- reviewing chunking strategy
-- reducing irrelevant context
-- improving consistency between retrieved evidence and generated answers
-- testing questions with varied wording and specificity
-- refining the final interaction flow
+### Work currently being integrated and qualified
 
-## Portfolio Status
+- A generalized two-stage semantic understanding → capability planning workflow.
+- Coordination of public evidence, local-history tools, follow-up reasoning and state/record ownership.
+- Real-model, real-browser multi-turn validation and human semantic/safety review.
 
-This repository should be read as an **in-development technical showcase**, not as a production release.
+### What this showcase does not claim
 
-The purpose of publishing it at this stage is to document the architecture and engineering approach while the private implementation continues to evolve.
+- No publicly runnable end-to-end demo or always-on service.
+- No assertion that the newer dual-LLM workflow is already the active production route.
+- No claim that benchmark/schema success implies correct medical advice or unrestricted tool execution.
 
-## Planned Additions
-
-When the application reaches a more stable stage, this repository can be expanded with:
-
-- architecture diagrams
-- screenshots
-- anonymized retrieval examples
-- evaluation comparisons
-- a short demo video
-- clearer implementation notes based on the final system design
+**Update policy:** Refresh this page when a meaningful architecture or product milestone changes these boundaries, rather than on each commit or pull request.

@@ -1,71 +1,37 @@
-# RAG Design Notes
+# Public RAG: Knowledge and Retrieval Architecture
 
-## Goal
+**English** | [简体中文](rag-design.zh-CN.md) · [System architecture](architecture.md)
 
-The assistant is designed to answer rabbit-care questions using retrieved domain knowledge as context for an LLM.
+## Beyond “put PDF chunks into a vector DB”
 
-The central design objective is **grounding**: the final answer should be driven by relevant retrieved material rather than generated only from the model's prior knowledge.
-
-## High-Level Flow
+The project treats **source verification, reusable knowledge, retrieval representation and model-side evidence decisions** as distinct engineering responsibilities.
 
 ```text
-1. User submits a question
-2. The system prepares the query for retrieval
-3. Relevant knowledge chunks are retrieved
-4. Retrieved material is assembled into model context
-5. The LLM generates a response using that context
-6. Retrieval and answer quality are reviewed during testing
+Source research + verified evidence scopes
+    ↓
+Canonical Knowledge (stable sections / provenance)
+    ↓
+Retrieval Units (index-ready representation)
+    ↓
+Embedding provider + indexed Chroma collection
+    ↓
+Candidate retrieval / follow-up retrieval if justified
+    ↓
+Selected evidence / grounded post-evidence reasoning
 ```
 
-## Why RAG
+A source's topic label or current research-batch position is **not** a safe runtime provenance identifier. Canonical content is managed separately from research workflow metadata. Retrieval units can be rebuilt or re-embedded while preserving their underlying evidence identity.
 
-Rabbit-care questions can be highly specific, and relevant information may be spread across different sources or phrased in different ways. A retrieval layer makes it possible to provide the model with focused material at answer time instead of depending only on general model knowledge.
+## Technical decisions
 
-## Design Priorities
+1. **Provenance before embedding:** preserve enough source/scope context to explain why knowledge is accepted and where claims came from. A vector similarity score alone does not establish authority.
+2. **Canonicalization before indexing:** consolidate findings into reusable sections, track overlaps, conflicting evidence and deferred coverage rather than indiscriminately treating raw documents as ready-to-answer chunks.
+3. **Representation versus knowledge:** the embedding/index representation is downstream of canonical knowledge and can change independently; changing embedding spaces requires staged indexing and validation.
+4. **Evidence quality at runtime:** candidate retrieval, refinement/follow-up and evidence selection are separate from final answer generation. When evidence is weak, the agent can seek clarification or acknowledge insufficiency instead of inventing certainty.
+5. **Controlled evaluations:** deterministic benchmarks check retrieval traces, provenance links, candidate selection, refinement and index isolation. Real LLM decisions and medical appropriateness remain separate manual-review questions.
 
-### Retrieval relevance
+## Current scope
 
-A fluent answer is not enough if the retrieved context is weak. Retrieval quality is therefore treated as a first-class part of the system.
+The private repository contains real knowledge assets and RAG evaluation infrastructure, with selected public-evidence flows implemented. **This is not a claim that every canonical section is live-indexed, that the default retrieval path has fully switched, or that the full real-model assistant is ready.**
 
-Questions used during testing include broad daily-care questions, more specific health-related questions, and queries that use different wording for similar concepts.
-
-### Context quality
-
-The retrieved chunks need to contain enough information to support a useful answer without introducing excessive unrelated material.
-
-This creates a practical tuning problem around:
-
-- how documents are divided into chunks
-- how much context is retrieved
-- how closely retrieved chunks match the actual user intent
-- whether neighboring context is needed for completeness
-
-### Grounded generation
-
-The response-generation stage is expected to use the retrieved context as the primary evidence available to the model.
-
-During development, answer quality is reviewed together with retrieval output. This makes it easier to distinguish a retrieval failure from a generation failure.
-
-## Failure Cases Being Considered
-
-Typical failure modes for a RAG system include:
-
-- highly similar chunks being retrieved repeatedly
-- a semantically related but practically irrelevant passage ranking too highly
-- important supporting context not being retrieved
-- a query being too broad for a single retrieval pass
-- generated answers extending beyond what the retrieved context supports
-
-The project is being iterated around these kinds of cases rather than relying only on successful example questions.
-
-## Private Components
-
-The following are intentionally not published in this showcase repository:
-
-- full application source code
-- private knowledge-base contents
-- API credentials and environment configuration
-- production prompts
-- retrieval indexes / embeddings
-
-The public repository focuses on architecture and development methodology.
+The private source corpus, protected health information, model credentials and raw indexes are intentionally excluded from this public portfolio.
