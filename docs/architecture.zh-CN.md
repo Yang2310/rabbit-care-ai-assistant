@@ -20,20 +20,7 @@
 
 ## 2. 整体数据和执行边界
 
-```mermaid
-flowchart TD
-    UI["React / TypeScript 前端"] --> API["FastAPI 编排器"]
-    API --> SEM["LLM1: 语义理解"]
-    SEM --> PLAN["LLM2: 任务规划"]
-    PLAN --> GATE["类型化工具校验"]
-    GATE --> RAG["公共知识 RAG"]
-    GATE --> HIST["受约束的历史读取"]
-    STORE["IndexedDB / OPFS"] --> HIST
-    RAG --> DOMAIN["证据后判断"]
-    HIST --> DOMAIN
-    DOMAIN --> CORE["对话 Core"]
-    CORE --> OUT["受控结果交接"]
-```
+![Rabbit Health Agent 详细架构](../assets/diagrams/agent-detail-zh.svg)
 
 此图重点表达各个模块的**责任和目标接口**。现有工作路径与较新的隔离实验合同尚不能等同于一个已经完成验收的正式链路。
 

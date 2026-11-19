@@ -20,18 +20,7 @@ It is a care-information and record-support project, **not an automated veterina
 
 The diagram describes the **architectural responsibilities and intended integrated flow**, not a claim that every arrow is already enabled in the released application.
 
-```mermaid
-flowchart TD
-    UI["React / TypeScript"] --> API["FastAPI orchestration"]
-    API --> L1["LLM1: Understanding"]
-    L1 --> L2["LLM2: Planning"]
-    L2 --> GATE["Validated tool access"]
-    GATE --> RAG["Public knowledge RAG"]
-    GATE --> HIST["Local history"]
-    RAG --> S3["Evidence review"]
-    HIST --> S3
-    S3 --> CORE["Guarded state and output"]
-```
+![Rabbit Health Agent architecture overview](assets/diagrams/agent-overview-en.svg)
 
 **Important boundary:** A two-stage Pre-RAG approach is the selected development direction and has isolated prototypes. The complete multi-capability task planner and new end-to-end wiring are still being integrated and evaluated. The existing application path must not be confused with this target architecture.
 

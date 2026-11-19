@@ -20,20 +20,7 @@ The design separates five responsibilities:
 
 ## 2. High-level data and execution boundaries
 
-```mermaid
-flowchart TD
-    UI["React / TypeScript UI"] --> API["FastAPI orchestrator"]
-    API --> SEM["LLM1: Understanding"]
-    SEM --> PLAN["LLM2: Planning"]
-    PLAN --> GATE["Typed tool gate"]
-    GATE --> RAG["Public RAG"]
-    GATE --> HIST["Scoped local history"]
-    STORE["IndexedDB / OPFS"] --> HIST
-    RAG --> DOMAIN["Post-evidence stage"]
-    HIST --> DOMAIN
-    DOMAIN --> CORE["Conversation Core"]
-    CORE --> OUT["Guarded handoff"]
-```
+![Rabbit Health Agent detailed architecture](../assets/diagrams/agent-detail-en.svg)
 
 The diagram emphasizes ownership and the **selected direction**. Existing production orchestration and isolated newer contracts are not represented as one already-qualified runtime path.
 

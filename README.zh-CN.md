@@ -20,18 +20,7 @@
 
 下图表示**目标集成架构中的职责及数据流**，不表示每条链路都已经在正式运行环境中启用。
 
-```mermaid
-flowchart TD
-    UI["React / TypeScript 前端"] --> API["FastAPI 编排"]
-    API --> L1["LLM1: 语义理解"]
-    L1 --> L2["LLM2: 任务规划"]
-    L2 --> GATE["工具与权限校验"]
-    GATE --> RAG["公共知识 RAG"]
-    GATE --> HIST["本地历史记录"]
-    RAG --> S3["证据后领域判断"]
-    HIST --> S3
-    S3 --> CORE["受控状态与输出"]
-```
+![Rabbit Health Agent 架构总览](assets/diagrams/agent-overview-zh.svg)
 
 **架构与现状的区别：** 双 LLM 的 Pre-RAG 理解与规划是当前选定的工程方向，已有隔离实验和实现基础；通用任务规划、跨模块完整接线及生产验收仍未完成。不能把目标架构图理解为所有功能已经上线。
 
