@@ -21,33 +21,18 @@ The design separates five responsibilities:
 ## 2. High-level data and execution boundaries
 
 ```mermaid
-flowchart TB
-    subgraph CLIENT["Device / browser"]
-      UI["React + TypeScript UI"]
-      LOCAL["IndexedDB / OPFS<br/>Profiles, records, private documents"]
-      HISTORY["Scoped local history tool"]
-      UI --> LOCAL
-      LOCAL --> HISTORY
-    end
-    subgraph SERVER["FastAPI orchestration"]
-      SEM["Semantic understanding (LLM1)"]
-      PLAN["Capability planning (LLM2)<br/>Integration in progress"]
-      EXEC["Typed tool contracts, authorization,<br/>source & time validation"]
-      DOMAIN["Post-evidence decision stage"]
-      CORE["Conversation Core / guarded mutation"]
-      SEM --> PLAN --> EXEC
-      EXEC --> DOMAIN --> CORE
-    end
-    subgraph KNOWLEDGE["Public evidence"]
-      CANON["Verified source → canonical sections<br/>→ retrieval units"]
-      VEC["Embedding / Chroma index"]
-      CANON --> VEC
-    end
-    UI --> SEM
-    EXEC --> VEC
-    EXEC <-->|"Signed scoped request / response"| HISTORY
-    VEC --> DOMAIN
-    CORE -. "Authorized response / state handoff" .-> UI
+flowchart TD
+    UI["React / TypeScript UI"] --> API["FastAPI orchestrator"]
+    API --> SEM["LLM1: Understanding"]
+    SEM --> PLAN["LLM2: Planning"]
+    PLAN --> GATE["Typed tool gate"]
+    GATE --> RAG["Public RAG"]
+    GATE --> HIST["Scoped local history"]
+    STORE["IndexedDB / OPFS"] --> HIST
+    RAG --> DOMAIN["Post-evidence stage"]
+    HIST --> DOMAIN
+    DOMAIN --> CORE["Conversation Core"]
+    CORE --> OUT["Guarded handoff"]
 ```
 
 The diagram emphasizes ownership and the **selected direction**. Existing production orchestration and isolated newer contracts are not represented as one already-qualified runtime path.

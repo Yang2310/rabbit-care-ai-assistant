@@ -22,17 +22,15 @@
 
 ```mermaid
 flowchart TD
-    UI["React / TypeScript 前端<br/>交互与本地数据"] --> API["Python / FastAPI<br/>Agent 编排"]
-    API --> L1["Pre-RAG 语义理解<br/>LLM 理解事实与目标"]
-    L1 --> L2["能力与任务规划<br/>双 LLM 已选方向，仍在集成"]
-    L2 --> TOOLS["受约束的工具和证据访问"]
-    TOOLS --> PUB["公共知识 RAG<br/>检索单元 / Embedding / ChromaDB"]
-    TOOLS --> PRIV["浏览器本地历史<br/>限定范围读取与签名续跑"]
-    PUB --> S3["证据获取后的领域判断<br/>相关性、充分性与回答策略"]
-    PRIV --> S3
-    S3 --> GUARD["受保护的回答和状态操作<br/>来源 / 身份 / 时间 / 权限"]
-    UI --> STORE["设备本地 IndexedDB / OPFS"]
-    GUARD -. "仅允许经授权确认的写入" .-> STORE
+    UI["React / TypeScript 前端"] --> API["FastAPI 编排"]
+    API --> L1["LLM1: 语义理解"]
+    L1 --> L2["LLM2: 任务规划"]
+    L2 --> GATE["工具与权限校验"]
+    GATE --> RAG["公共知识 RAG"]
+    GATE --> HIST["本地历史记录"]
+    RAG --> S3["证据后领域判断"]
+    HIST --> S3
+    S3 --> CORE["受控状态与输出"]
 ```
 
 **架构与现状的区别：** 双 LLM 的 Pre-RAG 理解与规划是当前选定的工程方向，已有隔离实验和实现基础；通用任务规划、跨模块完整接线及生产验收仍未完成。不能把目标架构图理解为所有功能已经上线。

@@ -22,17 +22,15 @@ The diagram describes the **architectural responsibilities and intended integrat
 
 ```mermaid
 flowchart TD
-    UI["React / TypeScript client<br/>User interaction & local data"] --> API["Python / FastAPI<br/>Agent orchestration"]
-    API --> L1["Pre-RAG semantic understanding<br/>LLM interprets statements & goals"]
-    L1 --> L2["Capability / task planning<br/>Selected dual-LLM design; integration ongoing"]
-    L2 --> TOOLS["Validated tools & evidence access"]
-    TOOLS --> PUB["Public knowledge RAG<br/>RetrievalUnits / embeddings / ChromaDB"]
-    TOOLS --> PRIV["Browser-local history<br/>Scoped read, signed continuation"]
-    PUB --> S3["Post-evidence reasoning<br/>Relevance, sufficiency & response decisions"]
-    PRIV --> S3
-    S3 --> GUARD["Guarded output & state operations<br/>Source / identity / time / authorization"]
-    UI --> STORE["Device-local IndexedDB / OPFS"]
-    GUARD -. "Only permitted, confirmed writes" .-> STORE
+    UI["React / TypeScript"] --> API["FastAPI orchestration"]
+    API --> L1["LLM1: Understanding"]
+    L1 --> L2["LLM2: Planning"]
+    L2 --> GATE["Validated tool access"]
+    GATE --> RAG["Public knowledge RAG"]
+    GATE --> HIST["Local history"]
+    RAG --> S3["Evidence review"]
+    HIST --> S3
+    S3 --> CORE["Guarded state and output"]
 ```
 
 **Important boundary:** A two-stage Pre-RAG approach is the selected development direction and has isolated prototypes. The complete multi-capability task planner and new end-to-end wiring are still being integrated and evaluated. The existing application path must not be confused with this target architecture.

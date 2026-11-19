@@ -21,33 +21,18 @@
 ## 2. 整体数据和执行边界
 
 ```mermaid
-flowchart TB
-    subgraph CLIENT["用户设备 / 浏览器"]
-      UI["React + TypeScript 前端"]
-      LOCAL["IndexedDB / OPFS<br/>档案、记录与私人文档"]
-      HISTORY["受约束的本地历史工具"]
-      UI --> LOCAL
-      LOCAL --> HISTORY
-    end
-    subgraph SERVER["FastAPI 编排"]
-      SEM["语义理解（LLM1）"]
-      PLAN["能力规划（LLM2）<br/>仍在集成"]
-      EXEC["类型化工具契约 / 权限校验<br/>来源与时间校验"]
-      DOMAIN["证据获取后决策阶段"]
-      CORE["对话 Core / 受保护的状态变更"]
-      SEM --> PLAN --> EXEC
-      EXEC --> DOMAIN --> CORE
-    end
-    subgraph KNOWLEDGE["公共证据"]
-      CANON["核验资料 → 标准化知识<br/>→ 检索单元"]
-      VEC["Embedding / Chroma 索引"]
-      CANON --> VEC
-    end
-    UI --> SEM
-    EXEC --> VEC
-    EXEC <-->|"带签名、限定范围的请求与结果"| HISTORY
-    VEC --> DOMAIN
-    CORE -. "受权限约束的回答与状态交接" .-> UI
+flowchart TD
+    UI["React / TypeScript 前端"] --> API["FastAPI 编排器"]
+    API --> SEM["LLM1: 语义理解"]
+    SEM --> PLAN["LLM2: 任务规划"]
+    PLAN --> GATE["类型化工具校验"]
+    GATE --> RAG["公共知识 RAG"]
+    GATE --> HIST["受约束的历史读取"]
+    STORE["IndexedDB / OPFS"] --> HIST
+    RAG --> DOMAIN["证据后判断"]
+    HIST --> DOMAIN
+    DOMAIN --> CORE["对话 Core"]
+    CORE --> OUT["受控结果交接"]
 ```
 
 此图重点表达各个模块的**责任和目标接口**。现有工作路径与较新的隔离实验合同尚不能等同于一个已经完成验收的正式链路。
